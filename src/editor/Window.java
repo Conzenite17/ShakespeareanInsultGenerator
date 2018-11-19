@@ -1,8 +1,9 @@
 package editor;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -84,32 +85,32 @@ public class Window extends JFrame {
 		textArea.setBounds(10, 56, 464, 95);
 		contentPane.add(textArea);
 
-		List<JComboBox<String>> comboBoxes = new ArrayList<JComboBox<String>>();
-		comboBoxes.add(comboBox);
-		comboBoxes.add(comboBox_1);
-		comboBoxes.add(comboBox_2);
+		ComboBoxController cmbC = new ComboBoxController();
+		cmbC.addComboBox(comboBox);
+		cmbC.addComboBox(comboBox_1);
+		cmbC.addComboBox(comboBox_2);
 		
-		String words1 = copyTxt("CSVPhrases1.txt");
-		String words2 = copyTxt("CSVPhrases2.txt");
-		String words3 = copyTxt("CSVPhrases3.txt");
+		cmbC.fillComboBox(0, getWordList("CSVPhrases1.txt"));
+		cmbC.fillComboBox(1, getWordList("CSVPhrases2.txt"));
+		cmbC.fillComboBox(2, getWordList("CSVPhrases2.txt"));
 		
-		List<String> lst1 = Arrays.asList(words1.split(","));
-		List<String> lst2 = Arrays.asList(words2.split(","));
-		List<String> lst3 = Arrays.asList(words3.split(","));
-
-		List<List<String>> wordLists = new ArrayList<>();
-		wordLists.add(lst1);
-		wordLists.add(lst2);
-		wordLists.add(lst3);
-		
-		ComboboxPopulator cmbP = new ComboboxPopulator(comboBoxes, wordLists);
-		cmbP.populate();
+		comboBox.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				
+			}
+		});
 
 	}
 
-	private String copyTxt(String fileName){
+	private List<String> getWordList(String fileName) {
+		List<String> wordList = Arrays.asList(wordsString(fileName).split(","));
+		return wordList;
+	}
+
+	private String wordsString(String fileName){
 		String text = null;
-		
 		try {
 			File file = new File(fileName);
 			Scanner sc = new Scanner(file);
@@ -117,11 +118,9 @@ public class Window extends JFrame {
 			sc.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		
+		}	
 		text = text.replaceAll(" ", "");
 		text = text.replaceAll("\"", "");
-		
 		return text;
 	}
 }
