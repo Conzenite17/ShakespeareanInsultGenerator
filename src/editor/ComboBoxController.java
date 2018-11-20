@@ -20,8 +20,18 @@ public class ComboBoxController {
 	}
 	
 	public void fillComboBox(int referenceNumber, List<String> wordList){
+		getComboBox(referenceNumber).removeAllItems();
 		for (String word : wordList) {
 			getComboBox(referenceNumber).addItem(word);
+		}
+	}
+	
+	public void fillComboBox(int referenceNumber, List<String> wordList, String startingLetter){
+		getComboBox(referenceNumber).removeAllItems();
+		for (String word : wordList) {
+			if (word.startsWith(startingLetter)) {
+				getComboBox(referenceNumber).addItem(word);
+			}
 		}
 	}
 

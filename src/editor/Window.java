@@ -7,7 +7,6 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -90,15 +89,34 @@ public class Window extends JFrame {
 		cmbC.addComboBox(comboBox_1);
 		cmbC.addComboBox(comboBox_2);
 		
-		cmbC.fillComboBox(0, getWordList("CSVPhrases1.txt"));
-		cmbC.fillComboBox(1, getWordList("CSVPhrases2.txt"));
-		cmbC.fillComboBox(2, getWordList("CSVPhrases2.txt"));
+		List<String> wordList0 = getWordList("CSVPhrases1.txt");
+		List<String> wordList1 = getWordList("CSVPhrases2.txt");
+		List<String> wordList2 = getWordList("CSVPhrases3.txt");
+		
+		cmbC.fillComboBox(0, wordList0);
+		cmbC.fillComboBox(1, wordList1);
+		cmbC.fillComboBox(2, wordList2);
 		
 		comboBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//perform comboBoxRepopulate with starting letter
+				String selectedValue = String.valueOf(comboBox.getSelectedItem());
+				String selectedLetter = selectedValue.substring(0, 1);
+				cmbC.fillComboBox(1, wordList1, selectedLetter);
+				cmbC.fillComboBox(2, wordList2, selectedLetter);
+			}
+		});
+		
+		btnGenerate.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent ae) {
-				
+			public void actionPerformed(ActionEvent arg0) {
+				String word1 = String.valueOf(comboBox.getSelectedItem());
+				String word2 = String.valueOf(comboBox_1.getSelectedItem());
+				String word3 = String.valueOf(comboBox_2.getSelectedItem());
+				String insult = word1 + " " + word2 + " " + word3;
+				textArea.append(insult + "\n");
 			}
 		});
 
