@@ -43,6 +43,13 @@ public class Window extends JFrame {
 	 * Create the frame.
 	 */
 	public Window() {
+		/**
+		 * Redesign UI
+		 * - May be easier to start from scratch with creating file
+		 * - BE CAREFULL with GIT
+		 * - Re size!
+		 * 
+		 */
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Shakespearean Insult Generator");
 		setBounds(100, 100, 500, 200);
