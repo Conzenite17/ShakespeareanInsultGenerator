@@ -84,11 +84,13 @@ public class Window extends JFrame {
 		lblThirdWord.setFont(new Font("Dialog", Font.BOLD, 16));
 		panel.add(lblThirdWord);
 
+		//Create Button
 		JButton btnGenerate = new JButton("Generate");
 		btnGenerate.setBounds(660, 7, 268, 76);
 		btnGenerate.setFont(new Font("Dialog", Font.BOLD, 16));
 		panel.add(btnGenerate);
 
+		//Create Text Area
 		JTextArea textArea = new JTextArea();
 		textArea.setEditable(false);
 		textArea.setBounds(10, 100, 928, 190);
