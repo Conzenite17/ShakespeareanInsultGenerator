@@ -1,6 +1,7 @@
 package editor;
 
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -21,7 +22,7 @@ public class Window extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+	private JPanel panel;
 
 	/**
 	 * Launch the application.
@@ -43,59 +44,64 @@ public class Window extends JFrame {
 	 * Create the frame.
 	 */
 	public Window() {
-		/**
-		 * Redesign UI
-		 * - May be easier to start from scratch with creating file
-		 * - BE CAREFULL with GIT
-		 * - Re size!
-		 * 
-		 */
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Shakespearean Insult Generator");
-		setBounds(100, 100, 500, 200);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		setBounds(100, 100, 1000, 400);
+		panel = new JPanel();
+		panel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		setContentPane(panel);
+		panel.setLayout(null);
 
+		//Create ComboBoxes
 		JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.setBounds(10, 25, 100, 20);
-		contentPane.add(comboBox);
-
-		JLabel lblStarterWord = new JLabel("Starter word");
-		lblStarterWord.setBounds(10, 11, 100, 14);
-		contentPane.add(lblStarterWord);
-
-		JLabel lblSecondWord = new JLabel("Second word");
-		lblSecondWord.setBounds(120, 11, 100, 14);
-		contentPane.add(lblSecondWord);
-
+		comboBox.setBounds(10, 40, 200, 40);
+		comboBox.setFont(new Font("Dialog", Font.BOLD, 16));
+		panel.add(comboBox);
+		
 		JComboBox<String> comboBox_1 = new JComboBox<String>();
-		comboBox_1.setBounds(120, 25, 100, 20);
-		contentPane.add(comboBox_1);
+		comboBox_1.setBounds(220, 40, 200, 40);
+		comboBox_1.setFont(new Font("Dialog", Font.BOLD, 16));
+		panel.add(comboBox_1);
 
 		JComboBox<String> comboBox_2 = new JComboBox<String>();
-		comboBox_2.setBounds(230, 25, 100, 20);
-		contentPane.add(comboBox_2);
+		comboBox_2.setBounds(440, 40, 200, 40);
+		comboBox_2.setFont(new Font("Dialog", Font.BOLD, 16));
+		panel.add(comboBox_2);
+
+		//Create labels
+		JLabel lblStarterWord = new JLabel("Starter word");
+		lblStarterWord.setBounds(10, 11, 200, 28);
+		lblStarterWord.setFont(new Font("Dialog", Font.BOLD, 16));
+		panel.add(lblStarterWord);
+
+		JLabel lblSecondWord = new JLabel("Second word");
+		lblSecondWord.setBounds(220, 11, 200, 28);
+		lblSecondWord.setFont(new Font("Dialog", Font.BOLD, 16));
+		panel.add(lblSecondWord);
 
 		JLabel lblThirdWord = new JLabel("Third word");
-		lblThirdWord.setBounds(230, 11, 100, 14);
-		contentPane.add(lblThirdWord);
+		lblThirdWord.setBounds(440, 11, 200, 28);
+		lblThirdWord.setFont(new Font("Dialog", Font.BOLD, 16));
+		panel.add(lblThirdWord);
 
 		JButton btnGenerate = new JButton("Generate");
-		btnGenerate.setBounds(340, 7, 134, 38);
-		contentPane.add(btnGenerate);
+		btnGenerate.setBounds(660, 7, 268, 76);
+		btnGenerate.setFont(new Font("Dialog", Font.BOLD, 16));
+		panel.add(btnGenerate);
 
 		JTextArea textArea = new JTextArea();
 		textArea.setEditable(false);
-		textArea.setBounds(10, 56, 464, 95);
-		contentPane.add(textArea);
-
+		textArea.setBounds(10, 100, 928, 190);
+		textArea.setFont(new Font("Dialog", Font.BOLD, 16));
+		panel.add(textArea);
+		
+		//Creating new ComboBox Controller
 		ComboBoxController cmbC = new ComboBoxController();
 		cmbC.addComboBox(comboBox);
 		cmbC.addComboBox(comboBox_1);
 		cmbC.addComboBox(comboBox_2);
 		
+		//Importing word list files
 		List<String> wordList0 = getWordList("CSVPhrases1.txt");
 		List<String> wordList1 = getWordList("CSVPhrases2.txt");
 		List<String> wordList2 = getWordList("CSVPhrases3.txt");
@@ -104,6 +110,7 @@ public class Window extends JFrame {
 		cmbC.fillComboBox(1, wordList1);
 		cmbC.fillComboBox(2, wordList2);
 		
+		//ComboBox listener to filter following ComboBoxes by first letter selection made in first box
 		comboBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
