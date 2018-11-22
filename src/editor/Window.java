@@ -31,7 +31,13 @@ public class Window extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Window frame = new Window();
+					DBConnector dbConnector = new DBConnector();
+//					dbConnector.addWordListsToDB(getWordList("CSVPhrases1.txt"), 
+//							getWordList("CSVPhrases2.txt"), 
+//							getWordList("CSVPhrases3.txt"));
+					
+					
+					Window frame = new Window(dbConnector);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,7 +49,7 @@ public class Window extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Window() {
+	public Window(DBConnector dbConnector) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Shakespearean Insult Generator");
 		setBounds(100, 100, 1000, 400);
@@ -138,12 +144,12 @@ public class Window extends JFrame {
 
 	}
 
-	private List<String> getWordList(String fileName) {
+	private static List<String> getWordList(String fileName) {
 		List<String> wordList = Arrays.asList(wordsString(fileName).split(","));
 		return wordList;
 	}
 
-	private String wordsString(String fileName){
+	private static String wordsString(String fileName){
 		String text = null;
 		try {
 			File file = new File(fileName);
