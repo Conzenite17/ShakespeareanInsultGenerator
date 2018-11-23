@@ -4,10 +4,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -16,11 +13,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
+import java.util.Scanner;
+import java.io.File;
+import java.util.Arrays;
+
 public class Window extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel panel;
 
@@ -110,9 +108,9 @@ public class Window extends JFrame {
 		cmbC.addComboBox(comboBox_2);
 		
 		//Importing word list files
-		List<String> wordList0 = getWordList("CSVPhrases1.txt");
-		List<String> wordList1 = getWordList("CSVPhrases2.txt");
-		List<String> wordList2 = getWordList("CSVPhrases3.txt");
+		List<String> wordList0 = dbConnector.getWordList(1);
+		List<String> wordList1 = dbConnector.getWordList(2);
+		List<String> wordList2 = dbConnector.getWordList(3);
 		
 		cmbC.fillComboBox(0, wordList0);
 		cmbC.fillComboBox(1, wordList1);
@@ -130,6 +128,7 @@ public class Window extends JFrame {
 			}
 		});
 		
+		//button to generate insult
 		btnGenerate.addActionListener(new ActionListener() {
 			
 			@Override
@@ -139,28 +138,29 @@ public class Window extends JFrame {
 				String word3 = String.valueOf(comboBox_2.getSelectedItem());
 				String insult = word1 + " " + word2 + " " + word3;
 				textArea.append(insult + "\n");
+				dbConnector.saveInsult(word1, word2, word3, insult);
 			}
 		});
 
 	}
 
-	private static List<String> getWordList(String fileName) {
-		List<String> wordList = Arrays.asList(wordsString(fileName).split(","));
-		return wordList;
-	}
-
-	private static String wordsString(String fileName){
-		String text = null;
-		try {
-			File file = new File(fileName);
-			Scanner sc = new Scanner(file);
-			text = (String) sc.nextLine();
-			sc.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}	
-		text = text.replaceAll(" ", "");
-		text = text.replaceAll("\"", "");
-		return text;
-	}
+//	private static List<String> getWordList(String fileName) {
+//		List<String> wordList = Arrays.asList(wordsString(fileName).split(","));
+//		return wordList;
+//	}
+//	
+//	private static String wordsString(String fileName){
+//		String text = null;
+//		try {
+//			File file = new File(fileName);
+//			Scanner sc = new Scanner(file);
+//			text = (String) sc.nextLine();
+//			sc.close();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}	
+//		text = text.replaceAll(" ", "");
+//		text = text.replaceAll("\"", "");
+//		return text;
+//	}
 }
